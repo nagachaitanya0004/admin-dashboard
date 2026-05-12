@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import { ProtectedRoute } from '@/components/ui/ProtectedRoute';
+import DashboardLayout from '@/components/layout/DashboardLayout';
 import LoginPage from '@/pages/LoginPage';
 import DashboardPage from '@/pages/DashboardPage';
 import { Loader2 } from 'lucide-react';
@@ -10,7 +11,7 @@ const RootRoute = () => {
   
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-base-dark">
+      <div className="min-h-screen flex items-center justify-center bg-[#030305]">
         <Loader2 className="w-8 h-8 text-primary animate-spin" />
       </div>
     );
@@ -24,9 +25,20 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={<RootRoute />} />
       <Route path="/login" element={<LoginPage />} />
+      
+      {/* Protected Routes wrapped in Dashboard Layout */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route element={<DashboardLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          {/* Mock routes for testing sidebar navigation active state */}
+          <Route path="/users" element={<DashboardPage />} />
+          <Route path="/orders" element={<DashboardPage />} />
+          <Route path="/products" element={<DashboardPage />} />
+          <Route path="/analytics" element={<DashboardPage />} />
+          <Route path="/settings" element={<DashboardPage />} />
+        </Route>
       </Route>
+      
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

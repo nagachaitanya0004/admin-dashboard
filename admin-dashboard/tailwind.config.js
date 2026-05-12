@@ -13,7 +13,7 @@ export default {
       colors: {
         base: {
           DEFAULT: '#020617', // slate-950
-          dark: '#0a0a0f',
+          dark: '#030305',    // Mathematically darker for ultra-premium feel
         },
         primary: {
           DEFAULT: '#6366f1', // indigo-500
@@ -32,31 +32,42 @@ export default {
       boxShadow: {
         'custom': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
         'custom-lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'glass-edge': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.15)',
+        'glass-glow': '0 0 60px -15px rgba(99, 102, 241, 0.4)',
+        'premium-glow': '0 0 40px 0 rgba(99, 102, 241, 0.2)',
       },
       borderRadius: {
         'custom': '0.75rem',
         'custom-lg': '1rem',
+        'premium': '1.25rem',
       },
       animation: {
-        'fade-up': 'fadeUp 0.6s ease-out forwards',
-        'shake': 'shake 0.4s ease-in-out',
-        'gradient': 'gradient 8s linear infinite',
+        'fade-up': 'fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'fade-in': 'fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'shake': 'shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both',
+        'float': 'float 8s ease-in-out infinite',
       },
       keyframes: {
         fadeUp: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        shake: {
-          '0%, 100%': { transform: 'translateX(0)' },
-          '25%': { transform: 'translateX(-5px)' },
-          '50%': { transform: 'translateX(5px)' },
-          '75%': { transform: 'translateX(-5px)' },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
-        gradient: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
+        shake: {
+          '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+          '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+          '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+          '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-12px)' },
+        },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
         }
       }
     },
