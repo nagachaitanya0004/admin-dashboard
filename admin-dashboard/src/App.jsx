@@ -4,6 +4,9 @@ import { ProtectedRoute } from '@/components/ui/ProtectedRoute';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import LoginPage from '@/pages/LoginPage';
 import DashboardPage from '@/pages/DashboardPage';
+import UsersPage from '@/pages/UsersPage';
+import OrdersPage from '@/pages/OrdersPage';
+import ProductsPage from '@/pages/ProductsPage';
 import { Loader2 } from 'lucide-react';
 
 const RootRoute = () => {
@@ -30,10 +33,9 @@ function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
-          {/* Mock routes for testing sidebar navigation active state */}
-          <Route path="/users" element={<DashboardPage />} />
-          <Route path="/orders" element={<DashboardPage />} />
-          <Route path="/products" element={<DashboardPage />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+          <Route path="/products" element={<ProductsPage />} />
           <Route path="/analytics" element={<DashboardPage />} />
           <Route path="/settings" element={<DashboardPage />} />
         </Route>

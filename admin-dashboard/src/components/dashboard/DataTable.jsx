@@ -1,0 +1,168 @@
+import { ChevronUp, ChevronDown, Inbox } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+export default function DataTable({ 
+  columns, 
+  data, 
+  loading, 
+  onRowClick, 
+  emptyMessage = "No results found",
+  sortConfig,
+  onSort,
+  onResetFilters,
+  
+  // Pagination props
+  showPagination = false,
+  currentPage,
+  totalPages,
+  goToPage,
+  pageSize,
+  setPageSize,
+  filteredCount
+}) {
+  return (
+    <div className="w-full">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse whitespace-nowrap">
+          <thead>
+            <tr className="sticky top-0 z-10 border-b border-white/[0.06] text-xs uppercase tracking-wider text-slate-500 bg-[#0c0c11]/80 backdrop-blur-md">
+              {columns.map((col) => (
+                <th 
+                  key={col.key} 
+                  className={cn(
+                    "px-6 py-4 font-medium",
+                    col.sortable && "cursor-pointer hover:text-slate-300 transition-colors select-none",
+                    col.width
+                  )}
+                  onClick={() => col.sortable && onSort && onSort(col.key)}
+                >
+                  <div className="flex items-center gap-1">
+                    {col.label}
+                    {col.sortable && sortConfig?.key === col.key && (
+                      sortConfig.direction === 'asc' 
+                        ? <ChevronUp className="w-3.5 h-3.5 text-indigo-400" />
+                        : <ChevronDown className="w-3.5 h-3.5 text-indigo-400" />
+                    )}
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-white/[0.06]">
+            {loading ? (
+              Array.from({ length: 5 }).map((_, i) => (
+                <tr key={i} className="relative overflow-hidden border-b border-white/[0.02]">
+                  <td colSpan={columns.length} className="px-6 py-5">
+                    <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/[0.03] to-transparent pointer-events-none" />
+                    <div className="flex items-center justify-between opacity-50">
+                      {columns.map((_, idx) => (
+                        <div key={idx} className={cn("h-4 bg-white/10 rounded", idx === 0 ? "w-40" : "w-24")} />
+                      ))}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : data.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} className="px-6 py-16 text-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-white/[0.02] flex items-center justify-center mb-4 border border-white/[0.05]">
+                      <Inbox className="w-8 h-8 text-slate-500" />
+                    </div>
+                    <p className="text-slate-400 text-sm mb-4">{emptyMessage}</p>
+                    {onResetFilters && (
+                      <button 
+                        onClick={onResetFilters}
+                        className="px-4 py-2 bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] text-sm text-white font-medium rounded-lg transition-colors"
+                      >
+                        Reset filters
+                      </button>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              data.map((row, i) => (
+                <tr 
+                  key={row.id || i} 
+                  className={cn(
+                    "hover:bg-white/[0.02] transition-colors",
+                    onRowClick && "cursor-pointer"
+                  )}
+                  onClick={() => onRowClick && onRowClick(row)}
+                >
+                  {columns.map((col) => (
+                    <td key={col.key} className="px-6 py-4 text-sm text-slate-300">
+                      {col.render ? col.render(row) : row[col.key]}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {showPagination && !loading && filteredCount > 0 && (
+        <div className="p-4 border-t border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/[0.01]">
+          <div className="flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto">
+            <span className="text-sm text-slate-500">Items per page</span>
+            <select 
+              value={pageSize}
+              onChange={(e) => { setPageSize(Number(e.target.value)); goToPage(1); }}
+              className="px-2 py-1 bg-[#050508] border border-white/[0.06] rounded-lg text-sm text-slate-300 focus:outline-none focus:border-indigo-500/50"
+            >
+              <option value={8}>8</option>
+              <option value={16}>16</option>
+              <option value={24}>24</option>
+            </select>
+          </div>
+          
+          <div className="flex items-center gap-1.5 self-end sm:self-auto">
+            <button 
+              onClick={() => goToPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-1.5 text-sm font-medium text-slate-300 bg-white/[0.03] border border-white/[0.06] rounded-lg hover:bg-white/[0.06] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Prev
+            </button>
+            
+            <div className="hidden sm:flex items-center gap-1.5">
+              {Array.from({ length: Math.min(5, totalPages) }).map((_, i) => {
+                let pageNum = i + 1;
+                if (totalPages > 5) {
+                  pageNum = currentPage <= 3 ? i + 1 : (currentPage >= totalPages - 2 ? totalPages - 4 + i : currentPage - 2 + i);
+                }
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => goToPage(pageNum)}
+                    className={`w-8 h-8 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                      currentPage === pageNum 
+                        ? 'bg-indigo-600 text-white shadow-glass-edge' 
+                        : 'text-slate-400 hover:bg-white/[0.06] hover:text-white'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="sm:hidden px-3 text-sm text-slate-500">
+              {currentPage} / {totalPages}
+            </div>
+
+            <button 
+              onClick={() => goToPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1.5 text-sm font-medium text-slate-300 bg-white/[0.03] border border-white/[0.06] rounded-lg hover:bg-white/[0.06] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
