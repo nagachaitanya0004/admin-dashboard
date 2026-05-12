@@ -4,6 +4,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Loader2, ShieldCheck, Zap, BarChart3, AlertCircle, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/useToast';
+import LogoIcon from '@/components/ui/LogoIcon';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -125,10 +126,10 @@ export default function LoginPage() {
         {/* Top: Logo */}
         <div className="relative z-10 flex items-center gap-3 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-[0_0_24px_rgba(99,102,241,0.4)] shadow-glass-edge">
-            <ShieldCheck className="w-6 h-6 text-[var(--text-main)]" strokeWidth={2.5} />
+            <LogoIcon className="w-6 h-6 text-[var(--text-main)]" />
           </div>
           <span className="text-3xl font-bold tracking-tight text-[var(--text-main)] drop-shadow-sm">
-            Nexus<span className="text-primary">.io</span>
+            Vertex<span className="text-primary">.io</span>
           </span>
         </div>
 
@@ -165,7 +166,7 @@ export default function LoginPage() {
 
         {/* Bottom: Copyright */}
         <div className="relative z-10 text-sm text-[var(--text-faint)] font-medium tracking-wide animate-fade-in" style={{ animationDelay: '0.7s' }}>
-          &copy; {new Date().getFullYear()} Nexus Corporation. All rights reserved.
+          &copy; {new Date().getFullYear()} Vertex Corporation. All rights reserved.
         </div>
       </div>
 
@@ -186,10 +187,10 @@ export default function LoginPage() {
           {/* Mobile Logo */}
           <div className="flex lg:hidden items-center justify-center gap-3 mb-10">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-glass-edge">
-              <ShieldCheck className="w-6 h-6 text-[var(--text-main)]" strokeWidth={2.5} />
+              <LogoIcon className="w-5 h-5 text-[var(--text-main)]" />
             </div>
             <span className="text-2xl font-bold tracking-tight text-[var(--text-main)] drop-shadow-sm">
-              Nexus<span className="text-primary">.io</span>
+              Vertex<span className="text-primary">.io</span>
             </span>
           </div>
 
@@ -230,7 +231,7 @@ export default function LoginPage() {
                       ? "border-rose-500/50 focus:border-rose-500 focus:ring-rose-500/20" 
                       : "border-[var(--border-card)] focus:border-primary focus:ring-primary/20 hover:border-white/[0.1]"
                   )}
-                  placeholder="admin@nexus.io"
+                  placeholder="admin@vertex.io"
                 />
               </div>
               {emailError && (
@@ -316,7 +317,7 @@ export default function LoginPage() {
           {/* Demo Hint */}
           <div className="mt-8 p-4 bg-[var(--bg-card-hover)] border border-[var(--border-subtle)] rounded-xl text-center shadow-inner">
             <p className="text-[0.8rem] text-[var(--text-muted)] tracking-wide">
-              Demo: <span className="text-slate-200 font-medium">admin@nexus.io</span> / <span className="text-slate-200 font-medium">nexus2024</span>
+              Demo: <span className="text-slate-200 font-medium">admin@vertex.io</span> / <span className="text-slate-200 font-medium">vertex2024</span>
             </p>
           </div>
 

@@ -1,4 +1,4 @@
-# Nexus Admin Dashboard
+# Vertex Admin Dashboard
 
 A high-performance, responsive React admin dashboard designed for enterprise scale. 
 Features dark/light mode, real-time data table mockups, glassmorphism aesthetics, and extensive component reusability.
@@ -35,7 +35,7 @@ netlify deploy --prod --dir=dist
 ```
 
 ## Demo Credentials
-- **Email**: admin@nexus.com
+- **Email**: admin@vertex.io
 - **Password**: password123
 
 ## Folder Structure

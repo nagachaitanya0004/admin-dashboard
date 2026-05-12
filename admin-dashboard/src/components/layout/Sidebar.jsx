@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, ShoppingCart, Package, BarChart3, Settings, Zap, ChevronLeft, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, ShoppingCart, Package, BarChart3, Settings, ChevronLeft, LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
+import LogoIcon from '@/components/ui/LogoIcon';
 
 export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }) {
   const { user, logout } = useAuth();
@@ -11,7 +12,6 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
     { name: 'Users', icon: Users, path: '/users' },
     { name: 'Orders', icon: ShoppingCart, path: '/orders' },
     { name: 'Products', icon: Package, path: '/products' },
-    { name: 'Analytics', icon: BarChart3, path: '/analytics', comingSoon: true },
     { name: 'Settings', icon: Settings, path: '/settings' },
   ];
 
@@ -35,9 +35,9 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
         <div className="h-16 flex items-center justify-between px-4 border-b border-[var(--border-card)] shrink-0">
           <div className={cn("flex items-center gap-3 overflow-hidden transition-all duration-300", isCollapsed ? "w-8" : "w-full")}>
             <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center shrink-0 shadow-glass-edge">
-              <Zap className="w-5 h-5 text-[var(--text-main)]" />
+              <LogoIcon className="w-5 h-5 text-[var(--text-main)]" />
             </div>
-            {!isCollapsed && <span className="text-xl font-bold tracking-tight text-[var(--text-main)] whitespace-nowrap">NEXUS</span>}
+            {!isCollapsed && <span className="text-xl font-bold tracking-tight text-[var(--text-main)] whitespace-nowrap">VERTEX</span>}
           </div>
           
           {/* Desktop Toggle Button */}
@@ -102,7 +102,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
             {!isCollapsed && (
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-[var(--text-main)] truncate">{user?.name || 'Admin User'}</p>
-                <p className="text-xs text-[var(--text-faint)] truncate">{user?.email || 'admin@nexus.io'}</p>
+                <p className="text-xs text-[var(--text-faint)] truncate">{user?.email || 'admin@vertex.io'}</p>
               </div>
             )}
             

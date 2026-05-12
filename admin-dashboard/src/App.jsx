@@ -44,7 +44,6 @@ function AppRoutes() {
             <Route path="/users" element={<UsersPage />} />
             <Route path="/orders" element={<OrdersPage />} />
             <Route path="/products" element={<ProductsPage />} />
-            <Route path="/analytics" element={<DashboardPage />} />
             <Route path="/settings" element={<DashboardPage />} />
           </Route>
         </Route>
