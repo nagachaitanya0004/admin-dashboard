@@ -3,6 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import StatCard from '@/components/dashboard/StatCard';
 import { Users, ShoppingCart, DollarSign, ListTodo, ArrowRight } from 'lucide-react';
 import { orders } from '@/data/dummy';
+import { SkeletonRow } from '@/components/ui/Skeleton';
 import { cn } from '@/lib/utils';
 
 export default function DashboardPage() {
@@ -32,7 +33,7 @@ export default function DashboardPage() {
       case 'processing': return 'text-indigo-400 bg-indigo-400/10 border-indigo-400/20';
       case 'pending': return 'text-amber-400 bg-amber-400/10 border-amber-400/20';
       case 'cancelled': return 'text-rose-400 bg-rose-400/10 border-rose-400/20';
-      default: return 'text-slate-400 bg-slate-400/10 border-slate-400/20';
+      default: return 'text-[var(--text-muted)] bg-slate-400/10 border-slate-400/20';
     }
   };
 
@@ -41,10 +42,10 @@ export default function DashboardPage() {
       
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-semibold text-white tracking-tight">
+        <h1 className="text-2xl font-semibold text-[var(--text-main)] tracking-tight">
           Good morning, {user?.name || 'Admin'} 👋
         </h1>
-        <p className="text-slate-400 text-sm mt-1">
+        <p className="text-[var(--text-muted)] text-sm mt-1">
           Here is what's happening with your projects today.
         </p>
       </div>
@@ -60,9 +61,9 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Recent Orders (takes up 2 cols on lg) */}
-        <div className="lg:col-span-2 bg-white/[0.02] border border-white/[0.06] rounded-2xl overflow-hidden flex flex-col">
-          <div className="p-6 border-b border-white/[0.06] flex items-center justify-between">
-            <h2 className="text-lg font-medium text-white">Recent Orders</h2>
+        <div className="lg:col-span-2 bg-[var(--bg-card-hover)] border border-[var(--border-card)] rounded-2xl overflow-hidden flex flex-col">
+          <div className="p-6 border-b border-[var(--border-card)] flex items-center justify-between">
+            <h2 className="text-lg font-medium text-[var(--text-main)]">Recent Orders</h2>
             <button className="text-sm font-medium text-primary hover:text-indigo-400 flex items-center transition-colors">
               View All <ArrowRight className="w-4 h-4 ml-1" />
             </button>
@@ -71,43 +72,32 @@ export default function DashboardPage() {
           <div className="overflow-x-auto flex-1">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-white/[0.06] text-[0.7rem] uppercase tracking-wider text-slate-500 bg-white/[0.01]">
+                <tr className="border-b border-[var(--border-card)] text-[0.7rem] uppercase tracking-wider text-[var(--text-faint)] bg-[var(--bg-subtle)]">
                   <th className="px-6 py-4 font-medium">Order ID</th>
                   <th className="px-6 py-4 font-medium">Customer</th>
-                  <th className="px-6 py-4 font-medium">Product</th>
-                  <th className="px-6 py-4 font-medium">Amount</th>
+                  <th className="px-6 py-4 font-medium hidden sm:table-cell">Product</th>
+                  <th className="px-6 py-4 font-medium hidden md:table-cell">Amount</th>
                   <th className="px-6 py-4 font-medium">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/[0.06]">
                 {loading ? (
                   Array.from({ length: 5 }).map((_, i) => (
-                    <tr key={i} className="relative overflow-hidden border-b border-white/[0.02]">
-                      <td colSpan="5" className="px-6 py-5">
-                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/[0.03] to-transparent pointer-events-none" />
-                        <div className="flex items-center justify-between opacity-50">
-                          <div className="h-4 bg-white/10 rounded w-20" />
-                          <div className="h-4 bg-white/10 rounded w-32" />
-                          <div className="h-4 bg-white/10 rounded w-40" />
-                          <div className="h-4 bg-white/10 rounded w-16" />
-                          <div className="h-5 bg-white/10 rounded-full w-20" />
-                        </div>
-                      </td>
-                    </tr>
+                    <SkeletonRow key={i} columns={5} />
                   ))
                 ) : (
                   recentOrders.map((order) => (
-                    <tr key={order.id} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-300">
+                    <tr key={order.id} className="hover:bg-[var(--bg-card-hover)] transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-[var(--text-secondary)]">
                         {order.orderId}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-300">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-secondary)]">
                         {order.customer}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-400">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-muted)] hidden sm:table-cell">
                         {order.product}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-[var(--text-main)] font-medium hidden md:table-cell">
                         {order.amount}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -124,10 +114,10 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Stats Placeholder */}
-        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-6 flex flex-col">
-          <h2 className="text-lg font-medium text-white mb-6">Quick Stats</h2>
+        <div className="bg-[var(--bg-card-hover)] border border-[var(--border-card)] rounded-2xl p-6 flex flex-col">
+          <h2 className="text-lg font-medium text-[var(--text-main)] mb-6">Quick Stats</h2>
           <div className="flex-1 flex items-center justify-center border-2 border-dashed border-white/[0.1] rounded-xl">
-            <p className="text-sm text-slate-500">Analytics chart placeholder</p>
+            <p className="text-sm text-[var(--text-faint)]">Analytics chart placeholder</p>
           </div>
         </div>
 

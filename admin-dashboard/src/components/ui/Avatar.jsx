@@ -14,7 +14,7 @@ export default function Avatar({ initials, className }) {
 
   return (
     <div className={cn(
-      "rounded-full flex items-center justify-center shrink-0 text-white font-semibold text-sm shadow-glass-edge",
+      "rounded-full flex items-center justify-center shrink-0 text-[var(--text-main)] font-semibold text-sm shadow-glass-edge",
       `bg-gradient-to-br ${gradient}`,
       className || "w-9 h-9"
     )}>

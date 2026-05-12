@@ -3,6 +3,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, Loader2, ShieldCheck, Zap, BarChart3, AlertCircle, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/useToast';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -15,6 +16,7 @@ export default function LoginPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const { login, isAuthenticated } = useAuth();
+  const { toast } = useToast();
   const navigate = useNavigate();
 
   // Subtle spotlight effect on mouse move
@@ -68,6 +70,7 @@ export default function LoginPage() {
 
     if (hasError) {
       triggerShake();
+      toast.error('Please fix the errors to continue');
       return;
     }
 
@@ -81,6 +84,7 @@ export default function LoginPage() {
       
       setTimeout(() => {
         setIsSubmitLoading(false);
+        toast.success('Welcome back!');
         navigate('/dashboard');
       }, remainingTime);
 
@@ -88,13 +92,14 @@ export default function LoginPage() {
       setTimeout(() => {
         setIsSubmitLoading(false);
         setError(err.message || 'Invalid credentials');
+        toast.error('Invalid credentials');
         triggerShake();
       }, 700);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#030305] flex flex-col lg:flex-row font-sans text-slate-100 overflow-hidden relative selection:bg-primary/30 selection:text-white">
+    <div className="min-h-screen bg-[var(--bg-overlay)] flex flex-col lg:flex-row font-sans text-slate-100 overflow-hidden relative selection:bg-primary/30 selection:text-[var(--text-main)]">
       
       {/* Global Grain/Noise Overlay for ultra-premium texture */}
       <div 
@@ -103,7 +108,7 @@ export default function LoginPage() {
       />
 
       {/* LEFT PANEL - 7/12 (Golden Ratio adjacent) */}
-      <div className="hidden lg:flex lg:w-7/12 relative flex-col justify-between p-16 xl:p-24 overflow-hidden border-r border-white/[0.04]">
+      <div className="hidden lg:flex lg:w-7/12 relative flex-col justify-between p-16 xl:p-24 overflow-hidden border-r border-[var(--border-subtle)]">
         
         {/* Abstract Fluid Mesh Gradients */}
         <div className="absolute inset-0 z-0">
@@ -120,22 +125,22 @@ export default function LoginPage() {
         {/* Top: Logo */}
         <div className="relative z-10 flex items-center gap-3 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-[0_0_24px_rgba(99,102,241,0.4)] shadow-glass-edge">
-            <ShieldCheck className="w-6 h-6 text-white" strokeWidth={2.5} />
+            <ShieldCheck className="w-6 h-6 text-[var(--text-main)]" strokeWidth={2.5} />
           </div>
-          <span className="text-3xl font-bold tracking-tight text-white drop-shadow-sm">
+          <span className="text-3xl font-bold tracking-tight text-[var(--text-main)] drop-shadow-sm">
             Nexus<span className="text-primary">.io</span>
           </span>
         </div>
 
         {/* Middle: Content */}
         <div className="relative z-10 max-w-xl animate-fade-in" style={{ animationDelay: '0.3s' }}>
-          <h1 className="text-5xl xl:text-[3.5rem] font-semibold leading-[1.1] text-white mb-6 tracking-tight">
+          <h1 className="text-5xl xl:text-[3.5rem] font-semibold leading-[1.1] text-[var(--text-main)] mb-6 tracking-tight">
             Intelligent operations, <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-indigo-300 to-emerald-400">
               simplified.
             </span>
           </h1>
-          <p className="text-slate-400 text-lg xl:text-xl mb-12 leading-relaxed font-light">
+          <p className="text-[var(--text-muted)] text-lg xl:text-xl mb-12 leading-relaxed font-light">
             Experience our next-generation admin platform designed for extreme performance, security, and pixel-perfect clarity.
           </p>
 
@@ -146,12 +151,12 @@ export default function LoginPage() {
               { icon: BarChart3, title: 'Advanced Reporting', desc: 'Customized visual insights at scale.', color: 'text-amber-400' }
             ].map((feature, idx) => (
               <div key={idx} className="flex items-center gap-5 group">
-                <div className="w-14 h-14 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center shrink-0 shadow-sm transition-all duration-500 group-hover:bg-white/[0.04] group-hover:scale-105 group-hover:shadow-glass-edge">
+                <div className="w-14 h-14 rounded-2xl bg-[var(--bg-card-hover)] border border-[var(--border-subtle)] flex items-center justify-center shrink-0 shadow-sm transition-all duration-500 group-hover:bg-[var(--bg-active)] group-hover:scale-105 group-hover:shadow-glass-edge">
                   <feature.icon className={cn("w-6 h-6", feature.color)} strokeWidth={2} />
                 </div>
                 <div>
-                  <h3 className="text-[1.05rem] font-medium text-white tracking-wide">{feature.title}</h3>
-                  <p className="text-[0.9rem] text-slate-400 mt-0.5">{feature.desc}</p>
+                  <h3 className="text-[1.05rem] font-medium text-[var(--text-main)] tracking-wide">{feature.title}</h3>
+                  <p className="text-[0.9rem] text-[var(--text-muted)] mt-0.5">{feature.desc}</p>
                 </div>
               </div>
             ))}
@@ -159,7 +164,7 @@ export default function LoginPage() {
         </div>
 
         {/* Bottom: Copyright */}
-        <div className="relative z-10 text-sm text-slate-500 font-medium tracking-wide animate-fade-in" style={{ animationDelay: '0.7s' }}>
+        <div className="relative z-10 text-sm text-[var(--text-faint)] font-medium tracking-wide animate-fade-in" style={{ animationDelay: '0.7s' }}>
           &copy; {new Date().getFullYear()} Nexus Corporation. All rights reserved.
         </div>
       </div>
@@ -174,23 +179,23 @@ export default function LoginPage() {
 
         {/* Form Card */}
         <div className={cn(
-          "w-full max-w-[420px] bg-[#0c0c11]/80 backdrop-blur-2xl rounded-premium p-8 sm:p-10 shadow-glass-glow shadow-glass-edge border border-white/[0.08] relative z-20 animate-fade-up",
+          "w-full max-w-[420px] bg-[var(--bg-card)]/80 backdrop-blur-2xl rounded-premium p-8 sm:p-10 shadow-glass-glow shadow-glass-edge border border-[var(--border-focus)] relative z-20 animate-fade-up",
           isShaking && "animate-shake"
         )}>
           
           {/* Mobile Logo */}
           <div className="flex lg:hidden items-center justify-center gap-3 mb-10">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center shadow-glass-edge">
-              <ShieldCheck className="w-6 h-6 text-white" strokeWidth={2.5} />
+              <ShieldCheck className="w-6 h-6 text-[var(--text-main)]" strokeWidth={2.5} />
             </div>
-            <span className="text-2xl font-bold tracking-tight text-white drop-shadow-sm">
+            <span className="text-2xl font-bold tracking-tight text-[var(--text-main)] drop-shadow-sm">
               Nexus<span className="text-primary">.io</span>
             </span>
           </div>
 
           <div className="mb-8 text-center lg:text-left">
-            <h2 className="text-[1.75rem] font-semibold text-white mb-2 tracking-tight">Welcome Back</h2>
-            <p className="text-slate-400 text-[0.95rem]">Sign in to access your dashboard.</p>
+            <h2 className="text-[1.75rem] font-semibold text-[var(--text-main)] mb-2 tracking-tight">Welcome Back</h2>
+            <p className="text-[var(--text-muted)] text-[0.95rem]">Sign in to access your dashboard.</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5" noValidate>
@@ -208,11 +213,11 @@ export default function LoginPage() {
 
             {/* Email Field */}
             <div className="space-y-1.5">
-              <label className="block text-[0.85rem] font-medium text-slate-300 ml-1">
+              <label className="block text-[0.85rem] font-medium text-[var(--text-secondary)] ml-1">
                 Email Address
               </label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-primary transition-colors duration-300">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[var(--text-faint)] group-focus-within:text-primary transition-colors duration-300">
                   <Mail className="h-5 w-5" />
                 </div>
                 <input
@@ -220,10 +225,10 @@ export default function LoginPage() {
                   value={email}
                   onChange={handleEmailChange}
                   className={cn(
-                    "block w-full pl-[2.8rem] pr-4 py-3.5 bg-[#050508] border rounded-xl text-slate-200 placeholder-slate-600 text-[0.95rem] focus:outline-none focus:ring-[3px] transition-all duration-300 shadow-inner",
+                    "block w-full pl-[2.8rem] pr-4 py-3.5 bg-[var(--bg-card-alt)] border rounded-xl text-slate-200 placeholder-slate-600 text-[0.95rem] focus:outline-none focus:ring-[3px] transition-all duration-300 shadow-inner",
                     emailError 
                       ? "border-rose-500/50 focus:border-rose-500 focus:ring-rose-500/20" 
-                      : "border-white/[0.06] focus:border-primary focus:ring-primary/20 hover:border-white/[0.1]"
+                      : "border-[var(--border-card)] focus:border-primary focus:ring-primary/20 hover:border-white/[0.1]"
                   )}
                   placeholder="admin@nexus.io"
                 />
@@ -235,24 +240,24 @@ export default function LoginPage() {
 
             {/* Password Field */}
             <div className="space-y-1.5">
-              <label className="block text-[0.85rem] font-medium text-slate-300 ml-1">
+              <label className="block text-[0.85rem] font-medium text-[var(--text-secondary)] ml-1">
                 Password
               </label>
               <div className="relative group">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-primary transition-colors duration-300">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[var(--text-faint)] group-focus-within:text-primary transition-colors duration-300">
                   <Lock className="h-5 w-5" />
                 </div>
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full pl-[2.8rem] pr-12 py-3.5 bg-[#050508] border border-white/[0.06] rounded-xl text-slate-200 placeholder-slate-600 text-[0.95rem] focus:outline-none focus:ring-[3px] focus:ring-primary/20 focus:border-primary hover:border-white/[0.1] transition-all duration-300 shadow-inner"
+                  className="block w-full pl-[2.8rem] pr-12 py-3.5 bg-[var(--bg-card-alt)] border border-[var(--border-card)] rounded-xl text-slate-200 placeholder-slate-600 text-[0.95rem] focus:outline-none focus:ring-[3px] focus:ring-primary/20 focus:border-primary hover:border-white/[0.1] transition-all duration-300 shadow-inner"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-500 hover:text-slate-300 transition-colors focus:outline-none"
+                  className="absolute inset-y-0 right-0 pr-4 flex items-center text-[var(--text-faint)] hover:text-[var(--text-secondary)] transition-colors focus:outline-none"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -265,15 +270,15 @@ export default function LoginPage() {
                 <div className="relative flex items-center justify-center">
                   <input 
                     type="checkbox" 
-                    className="peer appearance-none w-4 h-4 rounded-[4px] border border-white/[0.15] bg-[#050508] checked:bg-primary checked:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-1 focus:ring-offset-[#0c0c11] transition-all cursor-pointer"
+                    className="peer appearance-none w-4 h-4 rounded-[4px] border border-white/[0.15] bg-[var(--bg-card-alt)] checked:bg-primary checked:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 focus:ring-offset-1 focus:ring-offset-[#0c0c11] transition-all cursor-pointer"
                   />
-                  <div className="absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity text-white">
+                  <div className="absolute pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity text-[var(--text-main)]">
                     <svg className="w-3 h-3" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M11.6666 3.5L5.24992 9.91667L2.33325 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                 </div>
-                <span className="text-slate-400 group-hover:text-slate-200 transition-colors">Remember me</span>
+                <span className="text-[var(--text-muted)] group-hover:text-slate-200 transition-colors">Remember me</span>
               </label>
               <a href="#" className="text-primary hover:text-indigo-400 font-medium transition-colors">
                 Forgot password?
@@ -285,7 +290,7 @@ export default function LoginPage() {
               type="submit"
               disabled={isSubmitLoading}
               className={cn(
-                "w-full h-[52px] mt-4 flex justify-center items-center rounded-xl text-[0.95rem] font-semibold text-white transition-all duration-300 overflow-hidden relative group",
+                "w-full h-[52px] mt-4 flex justify-center items-center rounded-xl text-[0.95rem] font-semibold text-[var(--text-main)] transition-all duration-300 overflow-hidden relative group",
                 "bg-indigo-600",
                 "focus:outline-none focus:ring-[3px] focus:ring-primary/40 focus:ring-offset-2 focus:ring-offset-[#0c0c11]",
                 "shadow-[0_0_20px_rgba(99,102,241,0.2)] shadow-glass-edge",
@@ -309,8 +314,8 @@ export default function LoginPage() {
           </form>
 
           {/* Demo Hint */}
-          <div className="mt-8 p-4 bg-white/[0.02] border border-white/[0.05] rounded-xl text-center shadow-inner">
-            <p className="text-[0.8rem] text-slate-400 tracking-wide">
+          <div className="mt-8 p-4 bg-[var(--bg-card-hover)] border border-[var(--border-subtle)] rounded-xl text-center shadow-inner">
+            <p className="text-[0.8rem] text-[var(--text-muted)] tracking-wide">
               Demo: <span className="text-slate-200 font-medium">admin@nexus.io</span> / <span className="text-slate-200 font-medium">nexus2024</span>
             </p>
           </div>

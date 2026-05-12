@@ -6,16 +6,53 @@
 
 @layer base {
   :root {
-    --color-base: #020617;
-    --color-base-dark: #0a0a0f;
-    --color-primary: #6366f1;
-    --color-success: #10b981;
-    --color-danger: #f43f5e;
-    --color-warning: #fbbf24;
+    /* Light Mode */
+    --bg-base: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-card-alt: #f1f5f9;
+    --bg-card-hover: #e2e8f0;
+    --bg-active: #cbd5e1;
+    --bg-subtle: rgba(0, 0, 0, 0.02);
+    --bg-overlay: rgba(255, 255, 255, 0.9);
+    --bg-tooltip: #ffffff;
+    
+    --border-card: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 0, 0.05);
+    --border-focus: rgba(0, 0, 0, 0.15);
+    
+    --text-main: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --text-faint: #94a3b8;
+    
+    --shimmer-via: rgba(0, 0, 0, 0.04);
+  }
+
+  .dark {
+    /* Dark Mode */
+    --bg-base: #0a0a0f;
+    --bg-card: #0c0c11;
+    --bg-card-alt: #050508;
+    --bg-card-hover: rgba(255, 255, 255, 0.02);
+    --bg-active: rgba(255, 255, 255, 0.04);
+    --bg-subtle: rgba(255, 255, 255, 0.01);
+    --bg-overlay: rgba(3, 3, 5, 0.8);
+    --bg-tooltip: #1a1a24;
+    
+    --border-card: rgba(255, 255, 255, 0.06);
+    --border-subtle: rgba(255, 255, 255, 0.02);
+    --border-focus: rgba(255, 255, 255, 0.1);
+    
+    --text-main: #ffffff;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-faint: #64748b;
+    
+    --shimmer-via: rgba(255, 255, 255, 0.03);
   }
 
   body {
-    @apply bg-base-dark text-slate-100 font-sans antialiased;
+    @apply bg-[var(--bg-base)] text-[var(--text-main)] font-sans antialiased transition-colors duration-300;
   }
 }
 

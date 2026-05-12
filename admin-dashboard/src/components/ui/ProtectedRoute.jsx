@@ -7,7 +7,7 @@ export const ProtectedRoute = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-base-dark">
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-base)]">
         <Loader2 className="w-8 h-8 text-primary animate-spin" />
       </div>
     );

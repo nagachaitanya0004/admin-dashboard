@@ -1,16 +1,53 @@
-# React + Vite
+# Nexus Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A high-performance, responsive React admin dashboard designed for enterprise scale. 
+Features dark/light mode, real-time data table mockups, glassmorphism aesthetics, and extensive component reusability.
 
-Currently, two official plugins are available:
+## Tech Stack
+- **React 18** (Hooks, Suspense, Lazy Loading)
+- **Vite** (Ultra-fast HMR and build pipeline)
+- **Tailwind CSS v3** (Custom design tokens, animations, variables)
+- **React Router v6** (Protected routes, nested layouts)
+- **Zustand** (Authentication state management)
+- **Lucide React** (Consistent iconography)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local Setup
 
-## React Compiler
+```bash
+# Install dependencies
+npm install
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Start development server
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Build & Deploy
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Build for production
+npm run build
+
+# Deploy to Vercel
+vercel --prod
+
+# Deploy to Netlify
+netlify deploy --prod --dir=dist
+```
+
+## Demo Credentials
+- **Email**: admin@nexus.com
+- **Password**: password123
+
+## Folder Structure
+```
+src/
+├── components/
+│   ├── dashboard/  # Data tables, Modals, Stat Cards
+│   ├── layout/     # Sidebar, Navbar, Page Wrappers
+│   └── ui/         # Buttons, Badges, Avatars, Skeletons, Toasts
+├── context/        # Auth Context
+├── data/           # Mock API data responses
+├── hooks/          # useTable, useModal, useToast
+├── lib/            # Utilities (cn, tailwind-merge)
+└── pages/          # Route views (Login, Dashboard, Users, etc.)
+```
